@@ -1,0 +1,18 @@
+site_name: acp-amp
+site_description: ACP adapter for Amp Code
+site_url: https://example.invalid/acp-amp
+repo_name: acp-amp
+repo_url: https://example.invalid/acp-amp
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Zed: zed.md
+  - SuperQode: superqode.md
+  - ACP Clients: acp-clients.md
+  - Troubleshooting: troubleshooting.md
+  - Development: development.md
+theme:
+  name: mkdocs
+markdown_extensions:
+  - toc:
+      permalink: true

@@ -1,0 +1,9 @@
+{
+  "name": "acp-amp-shim",
+  "private": true,
+  "type": "module",
+  "description": "Node shim for the acp-amp adapter",
+  "dependencies": {
+    "@sourcegraph/amp-sdk": "^0.1.0-20251214200908-g3251f72"
+  }
+}
