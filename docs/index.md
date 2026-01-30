@@ -8,6 +8,8 @@ Python based ACP clients you can use today:
 - fast-agent https://github.com/evalstate/fast-agent
 - SuperQode https://github.com/SuperagenticAI/superqode
 
+Brought to you by [Superagentic AI](https://super-agentic.ai)
+
 The default driver uses the Amp Python SDK, with a Node shim fallback.
 
 Highlights:

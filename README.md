@@ -2,10 +2,15 @@
 
 ![CI](https://github.com/SuperagenticAI/acp-amp/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Docs](https://img.shields.io/badge/docs-live-brightgreen.svg)
 
-acp-amp is an open source ACP adapter for Amp Code. It runs as a standard ACP agent over stdin and stdout and can be used from any ACP client, for example Zed or SuperQode. We built it to bring Amp to Python based ACP clients and to extend Amp usage beyond TypeScript only setups. This lets Python driven coding agents such as Toad, fast-agent, SuperQode, and other ACP clients use Amp natively.
+acp-amp is an open source ACP adapter for Amp Code. It runs as a standard ACP agent over stdin and stdout and can be used from any ACP client, for example Zed or SuperQode. We built it to bring Amp to Python based ACP clients and to extend Amp usage beyond TypeScript only setups. This lets Python driven coding agents such as [Toad](https://github.com/batrachianai/toad), [fast-agent](https://github.com/evalstate/fast-agent), [SuperQode](https://github.com/SuperagenticAI/superqode), and other ACP clients use Amp natively.
 
 In short, acp-amp bridges Amp into the ACP ecosystem and keeps the protocol surface clean and consistent for editors and clients. The default driver uses the Amp Python SDK, with a Node shim fallback.
+
+Docs: https://superagenticai.github.io/acp-amp/
+
+Brought to you by [Superagentic AI](https://super-agentic.ai)
 
 ## Where you can use it
 
@@ -15,9 +20,9 @@ In short, acp-amp bridges Amp into the ACP ecosystem and keeps the protocol surf
 
 Python based ACP clients you can use today:
 
-- Toad https://github.com/batrachianai/toad
-- fast-agent https://github.com/evalstate/fast-agent
-- SuperQode https://github.com/SuperagenticAI/superqode
+- [Toad](https://github.com/batrachianai/toad)
+- [fast-agent](https://github.com/evalstate/fast-agent)
+- [SuperQode](https://github.com/SuperagenticAI/superqode)
 
 ## Install (recommended)
 
