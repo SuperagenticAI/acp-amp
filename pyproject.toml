@@ -4,11 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "acp-amp"
-version = "0.1.0"
+version = "0.1.1"
 description = "ACP adapter that bridges Amp Code to Agent Client Protocol"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+dependencies = [
+  "agent-client-protocol>=0.7.1",
+]
 authors = [{ name = "Shashi Jagtap", email = "info@super-agentic.ai" }]
 maintainers = [{ name = "Shashi Jagtap", email = "info@super-agentic.ai" }]
 keywords = ["acp", "agent-client-protocol", "amp", "adapter", "zed", "superqode"]
@@ -29,13 +32,10 @@ Homepage = "https://github.com/SuperagenticAI/acp-amp"
 Repository = "https://github.com/SuperagenticAI/acp-amp"
 Issues = "https://github.com/SuperagenticAI/acp-amp/issues"
 Documentation = "https://github.com/SuperagenticAI/acp-amp"
-dependencies = [
-  "agent-client-protocol>=0.7.0",
-]
 
 [project.optional-dependencies]
 test = ["pytest>=7.0"]
-docs = ["mkdocs>=1.5"]
+docs = ["mkdocs>=1.5", "mkdocs-material>=9.5"]
 
 [tool.uv]
 package = true

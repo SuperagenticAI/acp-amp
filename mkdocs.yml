@@ -1,6 +1,6 @@
 site_name: acp-amp
 site_description: ACP adapter for Amp Code
-site_url: https://github.com/SuperagenticAI/acp-amp
+site_url: https://superagenticai.github.io/acp-amp
 repo_name: SuperagenticAI/acp-amp
 repo_url: https://github.com/SuperagenticAI/acp-amp
 nav:
@@ -12,7 +12,19 @@ nav:
   - Troubleshooting: troubleshooting.md
   - Development: development.md
 theme:
-  name: mkdocs
+  name: material
+  palette:
+    - scheme: slate
+      primary: black
+      accent: green
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
 markdown_extensions:
   - toc:
       permalink: true
+  - codehilite
+extra_css:
+  - stylesheets/extra.css

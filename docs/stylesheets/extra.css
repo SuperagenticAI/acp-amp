@@ -1,0 +1,23 @@
+:root {
+  --md-default-bg-color: #050505;
+  --md-code-bg-color: #0f0f10;
+  --md-code-fg-color: #f2f2f2;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #050505;
+  --md-default-fg-color: #f5f5f5;
+  --md-primary-fg-color: #111111;
+  --md-primary-bg-color: #f5f5f5;
+  --md-accent-fg-color: #22c55e;
+  --md-code-bg-color: #0f0f10;
+  --md-code-fg-color: #f2f2f2;
+}
+
+code {
+  color: var(--md-code-fg-color);
+}
+
+.md-typeset pre > code {
+  background: var(--md-code-bg-color);
+}
