@@ -124,6 +124,9 @@ class AmpAcpAgent(Agent):
             session.mode = mode_id
         return None
 
+    async def set_session_model(self, model_id: str, session_id: str, **_: Any) -> None:
+        return None
+
     async def prompt(self, prompt: list[Any], session_id: str, **kwargs: Any) -> PromptResponse:
         if not self._client:
             raise RuntimeError("client connection not ready")
@@ -172,7 +175,7 @@ class AmpAcpAgent(Agent):
                     )
                 except Exception:
                     pass
-                stop_reason = "error"
+                stop_reason = "end_turn"
                 break
 
             if item_type == "done":

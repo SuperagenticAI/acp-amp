@@ -22,7 +22,30 @@ If you prefer pip:
 pip install acp-amp
 ```
 
-## Step 2: Install the Node shim
+## Step 2: Install Amp CLI if needed
+
+Some Amp setups require the Amp CLI. If your SDK setup needs it, install:
+
+```bash
+npm install -g @sourcegraph/amp
+```
+
+## Step 2b: Optional Node shim
+
+If you installed from PyPI and do not have the source code, run:
+
+```bash
+acp-amp setup
+```
+
+Then install the shim dependencies:
+
+```bash
+cd ~/.acp-amp/shim
+npm install
+```
+
+## Step 2c: Install the Node shim from the repo
 
 ```bash
 cd node-shim
@@ -38,6 +61,18 @@ acp-amp
 ```
 
 Your ACP client should launch this command as a subprocess and talk over stdin/stdout.
+
+If you want to force the Node shim:
+
+```bash
+acp-amp run --driver node
+```
+
+If you want to force the Python SDK:
+
+```bash
+acp-amp run --driver python
+```
 
 ## Step 4: Configure your client
 

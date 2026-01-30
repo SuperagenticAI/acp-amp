@@ -4,13 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "acp-amp"
-version = "0.1.1"
+version = "0.1.2"
 description = "ACP adapter that bridges Amp Code to Agent Client Protocol"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 dependencies = [
   "agent-client-protocol>=0.7.1",
+  "amp-sdk>=0.0.2",
 ]
 authors = [{ name = "Shashi Jagtap", email = "info@super-agentic.ai" }]
 maintainers = [{ name = "Shashi Jagtap", email = "info@super-agentic.ai" }]

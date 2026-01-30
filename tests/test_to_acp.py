@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from acp_amp.mapping.to_acp import amp_event_to_updates
 from acp.schema import (
     AgentMessageChunk,
