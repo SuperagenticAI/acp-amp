@@ -1,96 +1,103 @@
-# Getting Started (simple)
+# Getting Started
 
-This is the shortest path to run **acp-amp**. We built it to bring Amp to Python based ACP clients and to extend Amp usage beyond TypeScript only setups. The default driver uses the Amp Python SDK, with a Node shim fallback.
+Choose your preferred version - Python or Node.js. Both provide the same Amp Code capabilities.
 
-Python based ACP clients you can use today:
+## Python Version
 
-- Toad https://github.com/batrachianai/toad
-- fast-agent https://github.com/evalstate/fast-agent
-- SuperQode https://github.com/SuperagenticAI/superqode
-
-Brought to you by [Superagentic AI](https://super-agentic.ai)
-
-## 1) Install (recommended)
+### Install
 
 ```bash
+# Recommended
 uv tool install acp-amp
-```
 
-## 1b) Install with pip
-
-```bash
+# Or with pip
 pip install acp-amp
 ```
 
-## 2) Install Amp CLI if needed
-
-Some Amp setups require the Amp CLI. If your SDK setup needs it, install:
+### Run
 
 ```bash
-npm install -g @sourcegraph/amp
+acp-amp run
 ```
 
-## 2b) Optional Node shim (fallback)
+### Driver Options (Python only)
 
-If you installed from PyPI and do not have the source code, run:
+The Python version supports multiple drivers:
+
+| Driver | Command | Description |
+|--------|---------|-------------|
+| `python` | `acp-amp run` | Uses `amp-sdk` Python package (default) |
+| `node` | `acp-amp run --driver node` | Uses Node.js shim fallback |
+| `auto` | `acp-amp run --driver auto` | Tries Python first, falls back to Node |
+
+If using the Node shim fallback, first run:
 
 ```bash
 acp-amp setup
-```
-
-This creates the shim files in `~/.acp-amp/shim`.
-
-Then install the shim dependencies:
-
-```bash
 cd ~/.acp-amp/shim
 npm install
 ```
 
-## 2c) Install Node shim from the repo
+## Node.js Version
+
+### Install
 
 ```bash
-cd node-shim
-npm install
+npm install -g @superagenticai/acp-amp
 ```
 
-## 3) Run the agent
+### Run
 
 ```bash
 acp-amp
 ```
 
-By default the Python SDK driver is used. To force the Node shim:
+Or run directly with npx (no install needed):
 
 ```bash
-acp-amp run --driver node
+npx @superagenticai/acp-amp
 ```
 
-## 3b) Run with uv
+## Prerequisites
+
+Both versions require:
+
+- [Amp CLI](https://ampcode.com) installed and authenticated (`amp login`)
+
+Version-specific:
+
+- **Python**: Python 3.10+
+- **Node.js**: Node.js 18+
+
+### Install Amp CLI
 
 ```bash
-uv run acp-amp
+npm install -g @sourcegraph/amp
+amp login
 ```
 
-## 3c) Force the Python SDK explicitly
+## Connect from Your Client
 
+Configure your ACP client to run the appropriate command:
+
+**Python:**
 ```bash
-acp-amp run --driver python
+acp-amp
 ```
 
-## 4) Connect from your client
+**Node.js:**
+```bash
+npx @superagenticai/acp-amp
+```
 
-Tell your ACP client to run the `acp-amp` command.
-If the client supports environment variables, set:
+If your client supports environment variables:
 
 ```
 AMP_API_KEY=your-api-key-here
 ```
 
-## Custom shim path (optional)
+## Next Steps
 
-If your shim is not at `node-shim/index.js`, set:
-
-```bash
-ACP_AMP_SHIM=/path/to/index.js acp-amp
-```
+- [Zed Setup](zed.md) - Configure Zed editor
+- [SuperQode Setup](superqode.md) - Configure SuperQode
+- [Troubleshooting](troubleshooting.md) - Common issues

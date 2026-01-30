@@ -1,0 +1,35 @@
+{
+  "name": "@superagenticai/acp-amp",
+  "version": "0.1.0",
+  "description": "ACP adapter for Amp Code - bridges Amp to Agent Client Protocol (ACP) compatible clients like Zed",
+  "type": "module",
+  "bin": {
+    "acp-amp": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "echo 'no lint'",
+    "test": "node -e 'console.log(\"OK\")'"
+  },
+  "keywords": [
+    "amp",
+    "acp",
+    "agent-client-protocol",
+    "zed",
+    "ai",
+    "coding-agent"
+  ],
+  "author": "SuperagenticAI",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SuperagenticAI/acp-amp"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@agentclientprotocol/sdk": "0.4.8",
+    "@sourcegraph/amp-sdk": "^0.1.0-20251214200908-g3251f72"
+  }
+}

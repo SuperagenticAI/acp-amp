@@ -1,63 +1,43 @@
-# Zed (step-by-step)
+# Zed Setup
 
-This guide explains how to run **acp-amp** in Zed in very simple steps.
+This guide explains how to run **acp-amp** in Zed.
 
-## What you need
+## Prerequisites
 
-- Python 3.10 or newer
-- Node.js 18 or newer
-- An Amp API key (if you use API key login)
+- [Amp CLI](https://ampcode.com) installed and authenticated (`amp login`)
+- **Python version**: Python 3.10+
+- **Node.js version**: Node.js 18+
 
-## Step 1: Install the package (recommended)
+## Option 1: Python Version
 
-Open a terminal in this repo and run:
+### Step 1: Install
 
 ```bash
+# Recommended
 uv tool install acp-amp
-```
 
-If you prefer pip:
-
-```bash
+# Or with pip
 pip install acp-amp
 ```
 
-## Step 2: Install Amp CLI if needed
-
-Some Amp setups require the Amp CLI. If your SDK setup needs it, install:
-
-```bash
-npm install -g @sourcegraph/amp
-```
-
-## Step 2b: Optional Node shim
-
-If you installed from PyPI and do not have the source code, run:
-
-```bash
-acp-amp setup
-```
-
-Then install the shim dependencies:
-
-```bash
-cd ~/.acp-amp/shim
-npm install
-```
-
-## Step 2c: Install the Node shim from the repo
-
-```bash
-cd node-shim
-npm install
-```
-
-## Step 3: Tell Zed about the agent
+### Step 2: Configure Zed
 
 1. Open Zed
-2. Open **Settings** (press `Cmd+,` on macOS or `Ctrl+,` on Linux/Windows)
-3. Find or add `settings.json`
-4. Paste this:
+2. Open **Settings** (`Cmd+,` on macOS or `Ctrl+,` on Linux/Windows)
+3. Add to `settings.json`:
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": []
+    }
+  }
+}
+```
+
+With API key:
 
 ```json
 {
@@ -73,31 +53,69 @@ npm install
 }
 ```
 
-## Step 4: Start the agent
+## Option 2: Node.js Version
+
+### Step 1: Install
+
+```bash
+npm install -g @superagenticai/acp-amp
+```
+
+### Step 2: Configure Zed
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp"
+    }
+  }
+}
+```
+
+Or using npx (no global install):
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "npx",
+      "args": ["@superagenticai/acp-amp"]
+    }
+  }
+}
+```
+
+## Step 3: Use the Agent
 
 1. Open the agent panel in Zed
 2. Choose **Amp**
 3. Type a prompt and press Enter
 
-If it works, you will see the response appear in Zed.
+## Python Driver Options
 
-## Optional: force the Node shim
+If using the Python version, you can specify a driver:
 
-If you want to use the Node shim instead of the Python SDK, set your command to:
-
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": ["run", "--driver", "python"]
+    }
+  }
+}
 ```
-acp-amp run --driver node
-```
 
-## Optional: force the Python SDK
+| Driver | Description |
+|--------|-------------|
+| `python` | Uses `amp-sdk` Python package (default) |
+| `node` | Uses Node.js shim fallback |
 
-```
-acp-amp run --driver python
-```
+## Troubleshooting
 
-## If it does not work
-
-- Make sure the **AMP_API_KEY** is correct
-- Make sure `node-shim` dependencies are installed
+- Make sure the **AMP_API_KEY** is correct (if using API key auth)
+- Make sure `amp login` was successful
 - Try closing and reopening Zed
-- Check Zed’s output panel for errors
+- Check Zed's output panel for errors
+- See [Troubleshooting](troubleshooting.md) for more help
