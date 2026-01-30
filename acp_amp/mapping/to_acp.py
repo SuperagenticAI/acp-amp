@@ -14,16 +14,18 @@ from acp.helpers import (
 )
 
 
-def amp_event_to_updates(event: dict[str, Any]) -> list[Any]:
+def amp_event_to_updates(event: dict[str, Any] | Any) -> list[Any]:
     """Convert a single Amp SDK event into ACP session updates."""
     updates: list[Any] = []
+    event = _ensure_dict(_normalize_recursive(event))
 
-    if event.get("type") == "result" and event.get("is_error"):
-        error_text = str(event.get("error", "Unknown error"))
+    if _safe_get(event, "type") == "result" and _safe_get(event, "is_error"):
+        error_text = str(_safe_get(event, "error", "Unknown error"))
         updates.append(update_agent_message(text_block(f"Error: {error_text}")))
         return updates
 
-    content = event.get("message", {}).get("content")
+    message = _ensure_dict(_safe_get(event, "message", {}))
+    content = _safe_get(message, "content")
     if isinstance(content, str):
         updates.extend(_message_to_updates(event, [content]))
         return updates
@@ -36,40 +38,42 @@ def amp_event_to_updates(event: dict[str, Any]) -> list[Any]:
 
 def _message_to_updates(event: dict[str, Any], content: Iterable[Any]) -> list[Any]:
     updates: list[Any] = []
-    role = event.get("type")
+    role = _safe_get(event, "type")
     for chunk in content:
         if isinstance(chunk, str):
             updates.append(_text_update(role, chunk))
             continue
+        if not isinstance(chunk, dict):
+            chunk = _ensure_dict(chunk)
 
-        chunk_type = chunk.get("type")
+        chunk_type = _safe_get(chunk, "type")
         if chunk_type == "text":
-            updates.append(_text_update(role, chunk.get("text", "")))
+            updates.append(_text_update(role, _safe_get(chunk, "text", "")))
             continue
 
         if chunk_type == "thinking":
-            updates.append(update_agent_thought_text(chunk.get("thinking", "")))
+            updates.append(update_agent_thought_text(_safe_get(chunk, "thinking", "")))
             continue
 
         if chunk_type == "image":
-            source = chunk.get("source", {})
-            if source.get("type") == "base64":
+            source = _ensure_dict(_safe_get(chunk, "source", {}))
+            if _safe_get(source, "type") == "base64":
                 updates.append(
                     update_agent_message(
                         image_block(
-                            data=source.get("data", ""),
-                            mime_type=source.get("media_type", "application/octet-stream"),
+                            data=_safe_get(source, "data", ""),
+                            mime_type=_safe_get(source, "media_type", "application/octet-stream"),
                             uri=None,
                         )
                     )
                 )
-            elif source.get("type") == "url":
+            elif _safe_get(source, "type") == "url":
                 updates.append(
                     update_agent_message(
                         image_block(
                             data="",
                             mime_type="",
-                            uri=source.get("url"),
+                            uri=_safe_get(source, "url"),
                         )
                     )
                 )
@@ -78,11 +82,11 @@ def _message_to_updates(event: dict[str, Any], content: Iterable[Any]) -> list[A
         if chunk_type == "tool_use":
             updates.append(
                 start_tool_call(
-                    tool_call_id=chunk.get("id", ""),
-                    title=chunk.get("name") or "Tool",
+                    tool_call_id=_safe_get(chunk, "id", ""),
+                    title=_safe_get(chunk, "name") or "Tool",
                     kind="other",
                     status="pending",
-                    raw_input=_safe_json(chunk.get("input")),
+                    raw_input=_safe_json(_safe_get(chunk, "input")),
                 )
             )
             continue
@@ -90,9 +94,9 @@ def _message_to_updates(event: dict[str, Any], content: Iterable[Any]) -> list[A
         if chunk_type == "tool_result":
             updates.append(
                 update_tool_call(
-                    tool_call_id=chunk.get("tool_use_id", ""),
-                    status="failed" if chunk.get("is_error") else "completed",
-                    content=_tool_result_content(chunk.get("content"), is_error=bool(chunk.get("is_error"))),
+                    tool_call_id=_safe_get(chunk, "tool_use_id", ""),
+                    status="failed" if _safe_get(chunk, "is_error") else "completed",
+                    content=_tool_result_content(_safe_get(chunk, "content"), is_error=bool(_safe_get(chunk, "is_error"))),
                 )
             )
             continue
@@ -138,4 +142,84 @@ def jsonable(value: Any) -> Any:
         return [jsonable(v) for v in value]
     if isinstance(value, dict):
         return {str(k): jsonable(v) for k, v in value.items()}
+    return str(value)
+
+
+def _normalize_obj(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if hasattr(value, "model_dump"):
+        return value.model_dump()
+    if hasattr(value, "dict"):
+        return value.dict()
+    if hasattr(value, "__dict__"):
+        return dict(value.__dict__)
+    return {"content": str(value)}
+
+
+def _ensure_dict(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, str):
+        return {"content": value}
+    return _normalize_obj(value)
+
+
+def _safe_get(obj: Any, key: str, default: Any = None) -> Any:
+    try:
+        if isinstance(obj, dict):
+            return obj.get(key, default)
+        if hasattr(obj, "get"):
+            return obj.get(key, default)
+        if hasattr(obj, key):
+            return getattr(obj, key)
+    except Exception:
+        return default
+    return default
+
+
+def _normalize_recursive(value: Any) -> Any:
+    import json
+    
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    
+    if isinstance(value, dict):
+        return {str(k): _normalize_recursive(v) for k, v in value.items()}
+    
+    if isinstance(value, (list, tuple)):
+        return [_normalize_recursive(v) for v in value]
+    
+    # Handle pydantic models
+    if hasattr(value, "model_dump_json"):
+        try:
+            return json.loads(value.model_dump_json())
+        except Exception:
+            pass
+    
+    if hasattr(value, "model_dump"):
+        try:
+            return _normalize_recursive(value.model_dump(mode="json"))
+        except Exception:
+            pass
+        try:
+            return _normalize_recursive(value.model_dump())
+        except Exception:
+            pass
+    
+    if hasattr(value, "json") and callable(getattr(value, "json")):
+        try:
+            return json.loads(value.json())
+        except Exception:
+            pass
+    
+    if hasattr(value, "dict") and callable(getattr(value, "dict")):
+        try:
+            return _normalize_recursive(value.dict())
+        except Exception:
+            pass
+    
+    if hasattr(value, "__dict__"):
+        return _normalize_recursive(dict(value.__dict__))
+    
     return str(value)

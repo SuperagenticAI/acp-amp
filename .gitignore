@@ -19,7 +19,7 @@ htmlcov/
 .ruff_cache/
 .tox/
 .nox/
-
+Reference/
 # Virtual environments
 .venv/
 venv/

@@ -10,11 +10,9 @@ from acp.helpers import update_available_commands, update_agent_message, text_bl
 from acp.schema import (
     AgentCapabilities,
     AuthenticateResponse,
-    AvailableMode,
     Implementation,
     InitializeResponse,
     McpCapabilities,
-    ModesResponse,
     NewSessionResponse,
     PromptResponse,
     PromptCapabilities,
@@ -106,13 +104,13 @@ class AmpAcpAgent(Agent):
 
         return NewSessionResponse(
             session_id=session_id,
-            modes=ModesResponse(
-                current_mode_id="default",
-                available_modes=[
-                    AvailableMode(id="default", name="Default", description="Prompt for tool permission"),
-                    AvailableMode(id="bypass", name="Bypass", description="Skip tool permission prompts"),
+            modes={
+                "currentModeId": "default",
+                "availableModes": [
+                    {"id": "default", "name": "Default", "description": "Prompt for tool permission"},
+                    {"id": "bypass", "name": "Bypass", "description": "Skip tool permission prompts"},
                 ],
-            ),
+            },
         )
 
     async def load_session(self, cwd: str, mcp_servers: list[Any], session_id: str, **_: Any) -> None:

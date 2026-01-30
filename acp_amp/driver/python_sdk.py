@@ -45,7 +45,7 @@ class PythonAmpDriver(AmpDriver):
         )
         try:
             async for message in self._execute(prompt, options=options):
-                yield {"type": "event", "id": request_id, "event": message}
+                yield {"type": "event", "id": request_id, "event": _normalize_event(message)}
             yield {"type": "done", "id": request_id, "stopReason": "end_turn"}
         except Exception as exc:  # pragma: no cover
             yield {"type": "error", "id": request_id, "error": {"message": str(exc)}}
@@ -89,3 +89,105 @@ class PythonAmpDriver(AmpDriver):
             except TypeError:
                 continue
         return self._AmpOptions()
+
+
+def _normalize_event(message: Any) -> dict[str, Any]:
+    import json
+    
+    # First try: use pydantic's JSON serialization (handles all nested models)
+    if hasattr(message, "model_dump_json"):
+        try:
+            result = json.loads(message.model_dump_json())
+            if isinstance(result, dict):
+                return result
+        except Exception:
+            pass
+    
+    # Second try: use model_dump with json mode
+    if hasattr(message, "model_dump"):
+        try:
+            result = message.model_dump(mode="json")
+            if isinstance(result, dict):
+                return _deep_to_dict(result)
+        except Exception:
+            pass
+        try:
+            result = message.model_dump()
+            if isinstance(result, dict):
+                return _deep_to_dict(result)
+        except Exception:
+            pass
+    
+    # Third try: use older pydantic .json() method
+    if hasattr(message, "json") and callable(getattr(message, "json")):
+        try:
+            result = json.loads(message.json())
+            if isinstance(result, dict):
+                return result
+        except Exception:
+            pass
+    
+    # Fourth try: use .dict() method
+    if hasattr(message, "dict") and callable(getattr(message, "dict")):
+        try:
+            result = message.dict()
+            if isinstance(result, dict):
+                return _deep_to_dict(result)
+        except Exception:
+            pass
+    
+    # Fifth try: manually extract attributes
+    if hasattr(message, "__dict__"):
+        return _deep_to_dict(dict(message.__dict__))
+    
+    # Last resort
+    return {"type": "assistant", "message": {"content": str(message)}}
+
+
+def _deep_to_dict(value: Any) -> Any:
+    """Recursively convert any non-dict objects to dicts."""
+    import json
+    
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    
+    if isinstance(value, dict):
+        return {str(k): _deep_to_dict(v) for k, v in value.items()}
+    
+    if isinstance(value, (list, tuple)):
+        return [_deep_to_dict(v) for v in value]
+    
+    # Handle pydantic models that might be nested
+    if hasattr(value, "model_dump_json"):
+        try:
+            return json.loads(value.model_dump_json())
+        except Exception:
+            pass
+    
+    if hasattr(value, "model_dump"):
+        try:
+            return _deep_to_dict(value.model_dump(mode="json"))
+        except Exception:
+            pass
+        try:
+            return _deep_to_dict(value.model_dump())
+        except Exception:
+            pass
+    
+    if hasattr(value, "json") and callable(getattr(value, "json")):
+        try:
+            return json.loads(value.json())
+        except Exception:
+            pass
+    
+    if hasattr(value, "dict") and callable(getattr(value, "dict")):
+        try:
+            return _deep_to_dict(value.dict())
+        except Exception:
+            pass
+    
+    if hasattr(value, "__dict__"):
+        return _deep_to_dict(dict(value.__dict__))
+    
+    # Convert anything else to string
+    return str(value)
