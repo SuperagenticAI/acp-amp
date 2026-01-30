@@ -1,8 +1,8 @@
 site_name: acp-amp
 site_description: ACP adapter for Amp Code
-site_url: https://example.invalid/acp-amp
-repo_name: acp-amp
-repo_url: https://example.invalid/acp-amp
+site_url: https://github.com/SuperagenticAI/acp-amp
+repo_name: SuperagenticAI/acp-amp
+repo_url: https://github.com/SuperagenticAI/acp-amp
 nav:
   - Home: index.md
   - Getting Started: getting-started.md

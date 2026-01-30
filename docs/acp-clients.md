@@ -8,12 +8,18 @@ This guide explains how to run **acp-amp** from any ACP-compatible client.
 - Node.js 18 or newer
 - An Amp API key (if you use API key login)
 
-## Step 1: Install the Python package
+## Step 1: Install the package (recommended)
 
 In this repo, run:
 
 ```bash
-pip install -e .
+uv tool install acp-amp
+```
+
+If you prefer pip:
+
+```bash
+pip install acp-amp
 ```
 
 ## Step 2: Install the Node shim

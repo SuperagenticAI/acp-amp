@@ -2,10 +2,16 @@
 
 This is the shortest path to run **acp-amp**.
 
-## 1) Install Python package
+## 1) Install (recommended)
 
 ```bash
-pip install -e .
+uv tool install acp-amp
+```
+
+## 1b) Install with pip
+
+```bash
+pip install acp-amp
 ```
 
 ## 2) Install Node shim
@@ -19,6 +25,12 @@ npm install
 
 ```bash
 acp-amp
+```
+
+## 3b) Run with uv
+
+```bash
+uv run acp-amp
 ```
 
 ## 4) Connect from your client

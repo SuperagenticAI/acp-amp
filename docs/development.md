@@ -7,6 +7,12 @@ pip install -e .[test]
 pytest
 ```
 
+## Tests with uv
+
+```bash
+uv run pytest
+```
+
 ## Node shim protocol
 
 The Python adapter talks to the shim over NDJSON:

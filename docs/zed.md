@@ -8,12 +8,18 @@ This guide explains how to run **acp-amp** in Zed in very simple steps.
 - Node.js 18 or newer
 - An Amp API key (if you use API key login)
 
-## Step 1: Install the Python package
+## Step 1: Install the package (recommended)
 
 Open a terminal in this repo and run:
 
 ```bash
-pip install -e .
+uv tool install acp-amp
+```
+
+If you prefer pip:
+
+```bash
+pip install acp-amp
 ```
 
 ## Step 2: Install the Node shim
