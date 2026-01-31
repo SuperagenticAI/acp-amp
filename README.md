@@ -16,7 +16,6 @@
 
 [📖 **Documentation**](https://superagenticai.github.io/acp-amp/) • [▶️ **See Demo**](https://www.youtube.com/watch?v=Yt9-aSzPMhY) • [🐛 Report Bug](https://github.com/SuperagenticAI/acp-amp/issues) • [💡 Request Feature](https://github.com/SuperagenticAI/acp-amp/issues)
 
-[![Watch the demo](https://img.youtube.com/vi/Yt9-aSzPMhY/maxresdefault.jpg)](https://www.youtube.com/watch?v=Yt9-aSzPMhY)
 
 </div>
 
@@ -71,6 +70,10 @@ Add to your Zed settings (`~/.config/zed/settings.json`):
 ```
 
 No installation needed — npx downloads and runs automatically!
+
+---
+
+[![Watch the demo](https://img.youtube.com/vi/Yt9-aSzPMhY/maxresdefault.jpg)](https://www.youtube.com/watch?v=Yt9-aSzPMhY)
 
 ---
 
