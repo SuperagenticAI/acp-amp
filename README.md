@@ -83,6 +83,11 @@ No installation needed — npx downloads and runs automatically!
 
 Before using acp-amp, you need:
 
+0. **Paid Amp credits required**:
+   - ACP access requires a paid Amp credit balance.
+   - The free credit version does not work for ACP.
+   - Top up a few dollars in Amp to include the ACP functionality.
+
 1. **Amp CLI** installed and authenticated:
    ```bash
    curl -fsSL https://ampcode.com/install.sh | bash

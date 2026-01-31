@@ -19,6 +19,8 @@
 
 acp-amp bridges [Amp Code](https://ampcode.com) to the [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol), allowing you to use Amp's powerful AI coding capabilities in any ACP-compatible client.
 
+**Important:** ACP requires a paid Amp credit balance. The free credit version does not work for ACP. Top up a few dollars in Amp to enable ACP access.
+
 **Available in two versions:**
 
 | Version | Install | Best For |
