@@ -26,5 +26,12 @@ markdown_extensions:
   - toc:
       permalink: true
   - codehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
 extra_css:
   - stylesheets/extra.css

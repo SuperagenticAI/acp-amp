@@ -1,79 +1,32 @@
 # Zed Setup
 
-This guide explains how to run **acp-amp** in Zed.
+This guide shows you how to use Amp in [Zed](https://zed.dev) editor using acp-amp.
+
+---
 
 ## Prerequisites
 
-- [Amp CLI](https://ampcode.com) installed and authenticated (`amp login`)
-- **Python version**: Python 3.10+
-- **Node.js version**: Node.js 18+
+1. **Zed** installed ([download](https://zed.dev))
+2. **Amp CLI** installed and authenticated:
+   ```bash
+   curl -fsSL https://ampcode.com/install.sh | bash
+   amp login
+   ```
 
-## Option 1: Python Version
+---
 
-### Step 1: Install
+## Quick Setup (Recommended)
 
-```bash
-# Recommended
-uv tool install acp-amp
+The fastest way to get Amp running in Zed — no installation required!
 
-# Or with pip
-pip install acp-amp
-```
+### Step 1: Open Zed Settings
 
-### Step 2: Configure Zed
+- Press `Cmd+,` (macOS) or `Ctrl+,` (Linux/Windows)
+- Or: Menu → Zed → Settings
 
-1. Open Zed
-2. Open **Settings** (`Cmd+,` on macOS or `Ctrl+,` on Linux/Windows)
-3. Add to `settings.json`:
+### Step 2: Add Agent Configuration
 
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "acp-amp",
-      "args": []
-    }
-  }
-}
-```
-
-With API key:
-
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "acp-amp",
-      "args": [],
-      "env": {
-        "AMP_API_KEY": "your-api-key-here"
-      }
-    }
-  }
-}
-```
-
-## Option 2: Node.js Version
-
-### Step 1: Install
-
-```bash
-npm install -g @superagenticai/acp-amp
-```
-
-### Step 2: Configure Zed
-
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "acp-amp"
-    }
-  }
-}
-```
-
-Or using npx (no global install):
+Add this to your `settings.json`:
 
 ```json
 {
@@ -86,15 +39,86 @@ Or using npx (no global install):
 }
 ```
 
-## Step 3: Use the Agent
+### Step 3: Use Amp
 
-1. Open the agent panel in Zed
-2. Choose **Amp**
-3. Type a prompt and press Enter
+1. Open the Agent Panel in Zed
+2. Select **Amp** from the dropdown
+3. Type your prompt and press Enter
+
+That's it! 🎉
+
+---
+
+## Alternative Configurations
+
+### Python Version
+
+If you prefer using the Python package:
+
+```bash
+uv tool install acp-amp
+```
+
+Then configure Zed:
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": ["run"]
+    }
+  }
+}
+```
+
+### Node.js Global Install
+
+If you've installed the npm package globally:
+
+```bash
+npm install -g @superagenticai/acp-amp
+```
+
+Then configure Zed:
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp"
+    }
+  }
+}
+```
+
+---
+
+## Configuration with API Key
+
+If you use an API key instead of `amp login`:
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "npx",
+      "args": ["@superagenticai/acp-amp"],
+      "env": {
+        "AMP_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+---
 
 ## Python Driver Options
 
-If using the Python version, you can specify a driver:
+When using the Python version, you can specify a driver:
+
+### Default (Python SDK)
 
 ```json
 {
@@ -107,15 +131,187 @@ If using the Python version, you can specify a driver:
 }
 ```
 
-| Driver | Description |
-|--------|-------------|
-| `python` | Uses `amp-sdk` Python package (default) |
-| `node` | Uses Node.js shim fallback |
+### Node Shim Fallback
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": ["run", "--driver", "node"]
+    }
+  }
+}
+```
+
+### Auto-detect
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": ["run", "--driver", "auto"]
+    }
+  }
+}
+```
+
+---
+
+## Full Path Configuration
+
+If the command isn't in your PATH, use the full path:
+
+### Python (pip/uv)
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "/Users/yourname/.local/bin/acp-amp",
+      "args": ["run"]
+    }
+  }
+}
+```
+
+### Node.js (npm global)
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "/usr/local/bin/acp-amp"
+    }
+  }
+}
+```
+
+Find your command path:
+
+```bash
+# Python
+which acp-amp
+
+# Node.js
+which acp-amp
+# or
+npm bin -g
+```
+
+---
+
+## Complete Example Configurations
+
+### Minimal (npx)
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "npx",
+      "args": ["@superagenticai/acp-amp"]
+    }
+  }
+}
+```
+
+### Python with API Key
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp",
+      "args": ["run", "--driver", "python"],
+      "env": {
+        "AMP_API_KEY": "amp_xxx..."
+      }
+    }
+  }
+}
+```
+
+### Node.js with Full Path
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "/opt/homebrew/bin/node",
+      "args": ["/usr/local/lib/node_modules/@superagenticai/acp-amp/src/index.js"]
+    }
+  }
+}
+```
+
+---
 
 ## Troubleshooting
 
-- Make sure the **AMP_API_KEY** is correct (if using API key auth)
-- Make sure `amp login` was successful
-- Try closing and reopening Zed
-- Check Zed's output panel for errors
-- See [Troubleshooting](troubleshooting.md) for more help
+### Agent doesn't appear in Zed
+
+1. Check your `settings.json` syntax (no trailing commas)
+2. Restart Zed completely
+3. Check Zed's output panel for errors
+
+### "command not found"
+
+Use the full path to the command:
+
+```bash
+# Find the path
+which acp-amp
+
+# Use it in settings.json
+```
+
+### "amp: command not found"
+
+Install the Amp CLI:
+
+```bash
+curl -fsSL https://ampcode.com/install.sh | bash
+amp login
+```
+
+### Authentication errors
+
+Make sure you're logged in:
+
+```bash
+amp login
+```
+
+Or provide an API key in your Zed settings.
+
+### npx is slow
+
+The first run downloads the package. Subsequent runs are faster.
+
+For faster startup, use a global install:
+
+```bash
+npm install -g @superagenticai/acp-amp
+```
+
+Then change your config:
+
+```json
+{
+  "agent_servers": {
+    "Amp": {
+      "command": "acp-amp"
+    }
+  }
+}
+```
+
+---
+
+## Next Steps
+
+- [Troubleshooting](troubleshooting.md) — More detailed problem solving
+- [ACP Clients](acp-clients.md) — Use with other ACP clients
+- [Development](development.md) — Contribute to acp-amp

@@ -1,94 +1,289 @@
-# Any ACP Client (step-by-step)
+# ACP Clients
 
-This guide explains how to run **acp-amp** from any ACP-compatible client.
+acp-amp works with any [Agent Client Protocol (ACP)](https://github.com/anthropics/agent-client-protocol) compatible client. This guide covers configuration for popular ACP clients.
 
-## What you need
+---
 
-- Python 3.10 or newer
-- Node.js 18 or newer
-- An Amp API key (if you use API key login)
+## How ACP Works
 
-## Step 1: Install the package (recommended)
+ACP clients communicate with agents via JSON-RPC over stdin/stdout:
 
-In this repo, run:
+```
+┌─────────────────┐     stdin/stdout      ┌─────────────────┐
+│   ACP Client    │◀────────────────────▶│    acp-amp      │
+│  (Zed, etc.)    │      JSON-RPC         │  (Python/Node)  │
+└─────────────────┘                       └─────────────────┘
+```
+
+Any client that can:
+
+1. Launch a subprocess
+2. Send JSON-RPC over stdin
+3. Receive JSON-RPC from stdout
+
+...can use acp-amp.
+
+---
+
+## SuperQode
+
+[SuperQode](https://github.com/SuperagenticAI/superqode) is an AI coding agent platform with native ACP support.
+
+### Configuration
+
+Add to your SuperQode config:
+
+=== "Python Version"
+
+    ```yaml
+    agents:
+      amp:
+        description: "Amp Code agent"
+        protocol: acp
+        command: acp-amp
+        args: ["run"]
+    ```
+
+=== "Node.js Version"
+
+    ```yaml
+    agents:
+      amp:
+        description: "Amp Code agent"
+        protocol: acp
+        command: npx
+        args: ["@superagenticai/acp-amp"]
+    ```
+
+### Usage
 
 ```bash
-uv tool install acp-amp
+# Connect to Amp
+superqode connect acp amp
+
+# Start a conversation
+superqode chat amp "Explain this codebase"
 ```
 
-If you prefer pip:
+---
+
+## Toad
+
+[Toad](https://github.com/batrachianai/toad) is a Python-based ACP client.
+
+### Configuration
+
+```python
+from toad import ACPClient
+
+# Python version
+client = ACPClient(
+    command="acp-amp",
+    args=["run"]
+)
+
+# Node.js version
+client = ACPClient(
+    command="npx",
+    args=["@superagenticai/acp-amp"]
+)
+```
+
+### Usage
+
+```python
+async with client:
+    response = await client.prompt("Explain this function")
+    print(response)
+```
+
+---
+
+## fast-agent
+
+[fast-agent](https://github.com/evalstate/fast-agent) is a fast Python ACP client.
+
+### Configuration
+
+```python
+from fast_agent import Agent
+
+# Create Amp agent
+amp = Agent(
+    command="acp-amp",
+    args=["run"],
+    env={"AMP_API_KEY": "your-key"}  # optional
+)
+```
+
+### Usage
+
+```python
+result = await amp.run("Refactor this code")
+```
+
+---
+
+## Generic ACP Client
+
+For any ACP-compatible client, provide these details:
+
+### Command
+
+=== "Python Version"
+
+    ```
+    Command: acp-amp
+    Arguments: run
+    ```
+
+=== "Node.js Version"
+
+    ```
+    Command: npx
+    Arguments: @superagenticai/acp-amp
+    ```
+
+=== "Node.js Global"
+
+    ```
+    Command: acp-amp
+    Arguments: (none)
+    ```
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `AMP_API_KEY` | Amp API key | Only if not using `amp login` |
+
+### Protocol Details
+
+- **Transport**: stdin/stdout
+- **Format**: Newline-delimited JSON (NDJSON)
+- **Protocol**: JSON-RPC 2.0
+- **ACP Version**: 1
+
+---
+
+## Building Your Own Client
+
+If you're building an ACP client, here's how to integrate with acp-amp:
+
+### 1. Spawn the Process
+
+```python
+import subprocess
+
+# Python version
+process = subprocess.Popen(
+    ["acp-amp", "run"],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+)
+
+# Node.js version
+process = subprocess.Popen(
+    ["npx", "@superagenticai/acp-amp"],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+)
+```
+
+### 2. Initialize
+
+Send the initialize request:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": 1,
+    "clientCapabilities": {}
+  }
+}
+```
+
+### 3. Create a Session
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "newSession",
+  "params": {
+    "cwd": "/path/to/project",
+    "mcpServers": []
+  }
+}
+```
+
+### 4. Send a Prompt
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "prompt",
+  "params": {
+    "sessionId": "session-id-from-step-3",
+    "prompt": [
+      {"type": "text", "text": "Explain this codebase"}
+    ]
+  }
+}
+```
+
+### 5. Handle Notifications
+
+The agent sends `sessionUpdate` notifications with:
+
+- `agent_message_chunk` — Text from the agent
+- `tool_call` — Tool execution started
+- `tool_call_update` — Tool execution completed
+- `agent_thought_chunk` — Agent's thinking process
+
+---
+
+## Troubleshooting
+
+### Connection Issues
+
+1. Make sure the command is in your PATH
+2. Test the command directly:
+   ```bash
+   acp-amp run
+   # or
+   npx @superagenticai/acp-amp
+   ```
+3. Check stderr for error messages
+
+### Authentication
+
+Make sure Amp is authenticated:
 
 ```bash
-pip install acp-amp
+amp login
 ```
 
-## Step 2: Install Amp CLI if needed
-
-Some Amp setups require the Amp CLI. If your SDK setup needs it, install:
+Or provide an API key:
 
 ```bash
-npm install -g @sourcegraph/amp
+AMP_API_KEY="your-key" acp-amp run
 ```
 
-## Step 2b: Optional Node shim
+### Protocol Debugging
 
-If you installed from PyPI and do not have the source code, run:
+Enable verbose logging (check your client's documentation) to see the JSON-RPC messages being exchanged.
 
-```bash
-acp-amp setup
-```
+---
 
-Then install the shim dependencies:
+## Resources
 
-```bash
-cd ~/.acp-amp/shim
-npm install
-```
-
-## Step 2c: Install the Node shim from the repo
-
-```bash
-cd node-shim
-npm install
-```
-
-## Step 3: Run the agent
-
-In a terminal, run:
-
-```bash
-acp-amp
-```
-
-Your ACP client should launch this command as a subprocess and talk over stdin/stdout.
-
-If you want to force the Node shim:
-
-```bash
-acp-amp run --driver node
-```
-
-If you want to force the Python SDK:
-
-```bash
-acp-amp run --driver python
-```
-
-## Step 4: Configure your client
-
-Every ACP client has a place to configure agents. Add a command that points to `acp-amp`.
-
-Example settings (generic):
-
-```
-command: acp-amp
-args: []
-env:
-  AMP_API_KEY: your-api-key-here
-```
-
-## Notes
-
-- **Do not** log to stdout. ACP uses stdout for protocol messages.
-- Logs should go to stderr.
-- If your client allows environment variables, set `AMP_API_KEY` there.
+- [ACP Specification](https://github.com/anthropics/agent-client-protocol)
+- [Amp Documentation](https://ampcode.com/manual)
+- [acp-amp GitHub](https://github.com/SuperagenticAI/acp-amp)

@@ -1,7 +1,7 @@
 {
   "name": "@superagenticai/acp-amp",
   "version": "0.1.0",
-  "description": "ACP adapter for Amp Code - bridges Amp to Agent Client Protocol (ACP) compatible clients like Zed",
+  "description": "ACP adapter for Amp Code - bridges Amp to Agent Client Protocol (ACP) compatible clients like Zed, Toad, fast-agent and SuperQode  ",
   "type": "module",
   "bin": {
     "acp-amp": "src/index.js"
