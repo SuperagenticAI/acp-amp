@@ -1,11 +1,22 @@
+<div align="center">
+
 # acp-amp
 
 [![CI](https://github.com/SuperagenticAI/acp-amp/actions/workflows/ci.yml/badge.svg)](https://github.com/SuperagenticAI/acp-amp/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/acp-amp)](https://pypi.org/project/acp-amp/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/acp-amp)](https://pypi.org/project/acp-amp/)
 [![npm](https://img.shields.io/npm/v/@superagenticai/acp-amp)](https://www.npmjs.com/package/@superagenticai/acp-amp)
+[![npm Downloads](https://img.shields.io/npm/dm/@superagenticai/acp-amp)](https://www.npmjs.com/package/@superagenticai/acp-amp)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Node](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/SuperagenticAI/acp-amp?style=social)](https://github.com/SuperagenticAI/acp-amp)
 
 **ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client like [Zed](https://zed.dev).
+
+[📖 **Documentation**](https://superagenticai.github.io/acp-amp/) • [🐛 Report Bug](https://github.com/SuperagenticAI/acp-amp/issues) • [💡 Request Feature](https://github.com/SuperagenticAI/acp-amp/issues)
+
+</div>
 
 ---
 
