@@ -256,19 +256,6 @@ With npx (no install needed):
 }
 ```
 
-### Full Path (if command not in PATH)
-
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "/Users/yourname/.local/bin/acp-amp",
-      "args": ["run"]
-    }
-  }
-}
-```
-
 ---
 
 ## 🔌 Other ACP Clients

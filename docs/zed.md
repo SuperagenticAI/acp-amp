@@ -159,49 +159,6 @@ When using the Python version, you can specify a driver:
 
 ---
 
-## Full Path Configuration
-
-If the command isn't in your PATH, use the full path:
-
-### Python (pip/uv)
-
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "/Users/yourname/.local/bin/acp-amp",
-      "args": ["run"]
-    }
-  }
-}
-```
-
-### Node.js (npm global)
-
-```json
-{
-  "agent_servers": {
-    "Amp": {
-      "command": "/usr/local/bin/acp-amp"
-    }
-  }
-}
-```
-
-Find your command path:
-
-```bash
-# Python
-which acp-amp
-
-# Node.js
-which acp-amp
-# or
-npm bin -g
-```
-
----
-
 ## Complete Example Configurations
 
 ### Minimal (npx)
