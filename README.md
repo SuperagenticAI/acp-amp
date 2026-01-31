@@ -14,7 +14,7 @@
 
 **ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client like [Zed](https://zed.dev).
 
-[📖 **Documentation**](https://superagenticai.github.io/acp-amp/) • [🐛 Report Bug](https://github.com/SuperagenticAI/acp-amp/issues) • [💡 Request Feature](https://github.com/SuperagenticAI/acp-amp/issues)
+[📖 **Documentation**](https://superagenticai.github.io/acp-amp/) • [▶️ **See Demo**](https://www.youtube.com/watch?v=Yt9-aSzPMhY) • [🐛 Report Bug](https://github.com/SuperagenticAI/acp-amp/issues) • [💡 Request Feature](https://github.com/SuperagenticAI/acp-amp/issues)
 
 </div>
 

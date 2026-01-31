@@ -2,6 +2,8 @@
 
 **ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client like [Zed](https://zed.dev).
 
+[▶️ See Demo](https://www.youtube.com/watch?v=Yt9-aSzPMhY)
+
 ---
 
 ## What is acp-amp?
