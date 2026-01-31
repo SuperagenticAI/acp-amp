@@ -73,6 +73,8 @@ No installation needed — npx downloads and runs automatically!
 
 ---
 
+## 🎥 Watch the Demo
+
 [![Watch the demo](https://img.youtube.com/vi/Yt9-aSzPMhY/maxresdefault.jpg)](https://www.youtube.com/watch?v=Yt9-aSzPMhY)
 
 ---
