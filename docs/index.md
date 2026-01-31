@@ -77,6 +77,25 @@ Both versions provide identical functionality.
 - **[fast-agent](https://github.com/evalstate/fast-agent)** — Fast Python ACP client
 - Any client that speaks JSON-RPC over stdio
 
+acp-amp works with any ACP-compatible client. See the official ACP ecosystem list on the [Zed ACP page](https://zed.dev/acp) and the [ACP Registry announcement](https://zed.dev/blog/acp-registry).
+
+**Agents on ACP (from the ecosystem list):**
+- Gemini CLI (ACP Registry)
+- Claude Code (ACP Registry, via adapter)
+- Codex (ACP Registry, via adapter)
+- GitHub Copilot (ACP Registry)
+- JetBrains Junie (In Progress)
+- Goose
+- Kimi CLI
+- OpenCode (ACP Registry)
+- Stakpak
+- VT Code
+- Auggie CLI (ACP Registry)
+- Code Assistant
+- cagent
+- fast-agent
+- LLMling-Agent
+
 ---
 
 ## Features

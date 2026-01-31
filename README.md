@@ -320,6 +320,29 @@ These Python-based ACP clients work great with acp-amp:
 
 ---
 
+## 🌐 ACP Ecosystem
+
+acp-amp works with any ACP-compatible client. See the official ACP ecosystem list on the [Zed ACP page](https://zed.dev/acp) and the [ACP Registry announcement](https://zed.dev/blog/acp-registry) for the latest editors and agents.
+
+**Agents on ACP (from the ecosystem list):**
+- Gemini CLI (ACP Registry)
+- Claude Code (ACP Registry, via adapter)
+- Codex (ACP Registry, via adapter)
+- GitHub Copilot (ACP Registry)
+- JetBrains Junie (In Progress)
+- Goose
+- Kimi CLI
+- OpenCode (ACP Registry)
+- Stakpak
+- VT Code
+- Auggie CLI (ACP Registry)
+- Code Assistant
+- cagent
+- fast-agent
+- LLMling-Agent
+
+---
+
 ## ✨ Features
 
 - **Full Amp Code capabilities** — All Amp features available in your ACP client
