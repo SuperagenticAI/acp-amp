@@ -5,11 +5,7 @@
 [![npm](https://img.shields.io/npm/v/@superagenticai/acp-amp)](https://www.npmjs.com/package/@superagenticai/acp-amp)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-**ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/anthropics/agent-client-protocol) compatible client like [Zed](https://zed.dev).
-
-<p align="center">
-  <img src="docs/img/acp-amp-diagram.png" alt="acp-amp architecture" width="600">
-</p>
+**ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client like [Zed](https://zed.dev).
 
 ---
 
@@ -429,5 +425,5 @@ Apache-2.0
 Brought to you by [Superagentic AI](https://super-agentic.ai)
 
 Built with:
-- [Amp Code](https://ampcode.com) by Sourcegraph
-- [Agent Client Protocol](https://github.com/anthropics/agent-client-protocol) by Anthropic
+- [Amp Code](https://ampcode.com) by Amp
+- [Agent Client Protocol](https://github.com/agentclientprotocol/agent-client-protocol)

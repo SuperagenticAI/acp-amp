@@ -1,12 +1,12 @@
 # acp-amp Documentation
 
-**ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/anthropics/agent-client-protocol) compatible client like [Zed](https://zed.dev).
+**ACP adapter for [Amp Code](https://ampcode.com)** — Use Amp in any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client like [Zed](https://zed.dev).
 
 ---
 
 ## What is acp-amp?
 
-acp-amp bridges [Amp Code](https://ampcode.com) to the [Agent Client Protocol (ACP)](https://github.com/anthropics/agent-client-protocol), allowing you to use Amp's powerful AI coding capabilities in any ACP-compatible client.
+acp-amp bridges [Amp Code](https://ampcode.com) to the [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol), allowing you to use Amp's powerful AI coding capabilities in any ACP-compatible client.
 
 **Available in two versions:**
 
@@ -139,5 +139,5 @@ Brought to you by [Superagentic AI](https://super-agentic.ai)
 
 Built with:
 
-- [Amp Code](https://ampcode.com) by Sourcegraph
-- [Agent Client Protocol](https://github.com/anthropics/agent-client-protocol) by Anthropic
+- [Amp Code](https://ampcode.com) by Amp
+- [Agent Client Protocol](https://github.com/agentclientprotocol/agent-client-protocol)

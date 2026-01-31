@@ -1,6 +1,6 @@
 # ACP Clients
 
-acp-amp works with any [Agent Client Protocol (ACP)](https://github.com/anthropics/agent-client-protocol) compatible client. This guide covers configuration for popular ACP clients.
+acp-amp works with any [Agent Client Protocol (ACP)](https://github.com/agentclientprotocol/agent-client-protocol) compatible client. This guide covers configuration for popular ACP clients.
 
 ---
 
@@ -284,6 +284,6 @@ Enable verbose logging (check your client's documentation) to see the JSON-RPC m
 
 ## Resources
 
-- [ACP Specification](https://github.com/anthropics/agent-client-protocol)
+- [ACP Specification](https://github.com/agentclientprotocol/agent-client-protocol)
 - [Amp Documentation](https://ampcode.com/manual)
 - [acp-amp GitHub](https://github.com/SuperagenticAI/acp-amp)
