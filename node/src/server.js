@@ -124,6 +124,9 @@ If there are Cursor rules (in .cursor/rules/ or .cursorrules), Claude rules (CLA
 
     const options = {
       cwd: params.cwd || process.cwd(),
+      // amp-sdk still defaults to "workspace". Current Amp CLI accepts only
+      // private and unlisted, and rejects workspace with exit code 1.
+      visibility: 'private',
     };
 
     if (s.mode === 'bypass') {

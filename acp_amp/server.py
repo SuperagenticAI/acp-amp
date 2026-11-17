@@ -6,7 +6,7 @@ from typing import Any
 
 from acp import PROTOCOL_VERSION
 from acp.exceptions import RequestError
-from acp.helpers import update_available_commands, update_agent_message, text_block
+from acp_amp.acp_updates import text_block, update_agent_message, update_available_commands
 from acp.schema import (
     AgentCapabilities,
     AuthenticateResponse,

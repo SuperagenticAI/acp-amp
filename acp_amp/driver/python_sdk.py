@@ -4,6 +4,10 @@ from typing import Any, AsyncIterator
 
 from acp_amp.driver.base import AmpDriver, DriverCapabilities
 
+# Current Amp CLI builds accept only ``private`` and ``unlisted``. amp-sdk still
+# defaults to ``workspace``, which the CLI rejects with exit code 1.
+AMP_THREAD_VISIBILITY = "private"
+
 
 class PythonAmpDriver(AmpDriver):
     capabilities = DriverCapabilities(
@@ -48,7 +52,7 @@ class PythonAmpDriver(AmpDriver):
                 yield {"type": "event", "id": request_id, "event": _normalize_event(message)}
             yield {"type": "done", "id": request_id, "stopReason": "end_turn"}
         except Exception as exc:  # pragma: no cover
-            yield {"type": "error", "id": request_id, "error": {"message": str(exc)}}
+            yield {"type": "error", "id": request_id, "error": {"message": format_driver_error(exc)}}
 
     async def cancel(self, request_id: str) -> None:
         return None
@@ -75,20 +79,36 @@ class PythonAmpDriver(AmpDriver):
             base["continue_thread"] = thread_id
             base["thread_id"] = thread_id
 
-        candidates = [
-            base,
-            {k: v for k, v in base.items() if k not in ("dangerouslyAllowAll", "mcpConfig", "thread_id")},
-            {k: v for k, v in base.items() if k not in ("dangerously_allow_all", "mcp_config", "continue_thread")},
-            {k: v for k, v in base.items() if k in ("cwd", "dangerously_allow_all")},
-            {k: v for k, v in base.items() if k in ("cwd", "dangerouslyAllowAll")},
-            {},
-        ]
-        for attempt in candidates:
+        for attempt in option_attempts(base):
             try:
                 return self._AmpOptions(**attempt)
             except TypeError:
                 continue
         return self._AmpOptions()
+
+
+def option_attempts(base: dict[str, Any]) -> list[dict[str, Any]]:
+    """Option payloads, with a CLI-accepted visibility tried before SDK defaults."""
+    candidates = [
+        base,
+        {k: v for k, v in base.items() if k not in ("dangerouslyAllowAll", "mcpConfig", "thread_id")},
+        {k: v for k, v in base.items() if k not in ("dangerously_allow_all", "mcp_config", "continue_thread")},
+        {k: v for k, v in base.items() if k in ("cwd", "dangerously_allow_all")},
+        {k: v for k, v in base.items() if k in ("cwd", "dangerouslyAllowAll")},
+        {},
+    ]
+    return [{**attempt, "visibility": AMP_THREAD_VISIBILITY} for attempt in candidates] + candidates
+
+
+def format_driver_error(exc: BaseException) -> str:
+    """Include Amp CLI stderr. The SDK's own message is only the exit code."""
+    message = str(exc).strip() or exc.__class__.__name__
+    details = getattr(exc, "stderr", None) or getattr(exc, "details", None)
+    if isinstance(details, str):
+        details = details.strip()
+        if details and details not in message:
+            message = f"{message}\n{details}"
+    return message
 
 
 def _normalize_event(message: Any) -> dict[str, Any]:

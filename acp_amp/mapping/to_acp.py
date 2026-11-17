@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Iterable
 
-from acp.helpers import (
+from acp_amp.acp_updates import (
     image_block,
     text_block,
     tool_content,

@@ -68,6 +68,18 @@ uv tool install acp-amp
 
 ## Amp CLI Issues
 
+### "No module named acp.helpers" or the adapter exits before a session opens
+
+`acp-amp` 0.1.3 imported `acp.helpers`. `agent-client-protocol` 1.0 removed that module, so the adapter crashed on startup. Upgrade to `acp-amp` 0.1.4 or newer:
+
+```bash
+uv tool install --reinstall acp-amp
+```
+
+### "Process exited with code 1" when sending a prompt
+
+Current Amp CLI builds accept thread visibility `private` or `unlisted`. Older adapters asked for `workspace`, and the CLI exited before it read the prompt. `acp-amp` 0.1.4 requests `private`. If the message still names an exit code, the lines under it are the Amp CLI's own error. A signed-in account with no remaining credits fails here too.
+
 ### "amp: command not found"
 
 Install the Amp CLI:
