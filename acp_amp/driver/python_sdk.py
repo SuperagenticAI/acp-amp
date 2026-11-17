@@ -81,14 +81,18 @@ class PythonAmpDriver(AmpDriver):
 
         for attempt in option_attempts(base):
             try:
-                return self._AmpOptions(**attempt)
+                return apply_private_visibility(self._AmpOptions(**attempt))
             except TypeError:
                 continue
-        return self._AmpOptions()
+        return apply_private_visibility(self._AmpOptions())
 
 
 def option_attempts(base: dict[str, Any]) -> list[dict[str, Any]]:
-    """Option payloads, with a CLI-accepted visibility tried before SDK defaults."""
+    """Option payloads that always request a CLI-accepted visibility.
+
+    Attempts without ``visibility`` are not returned. amp-sdk defaults that
+    field to ``workspace``, and current Amp CLI builds reject it.
+    """
     candidates = [
         base,
         {k: v for k, v in base.items() if k not in ("dangerouslyAllowAll", "mcpConfig", "thread_id")},
@@ -97,7 +101,24 @@ def option_attempts(base: dict[str, Any]) -> list[dict[str, Any]]:
         {k: v for k, v in base.items() if k in ("cwd", "dangerouslyAllowAll")},
         {},
     ]
-    return [{**attempt, "visibility": AMP_THREAD_VISIBILITY} for attempt in candidates] + candidates
+    return [{**attempt, "visibility": AMP_THREAD_VISIBILITY} for attempt in candidates]
+
+
+def apply_private_visibility(options: Any) -> Any:
+    """Override an SDK default of ``workspace`` after the model is built."""
+    if getattr(options, "visibility", None) == AMP_THREAD_VISIBILITY:
+        return options
+    model_copy = getattr(options, "model_copy", None)
+    if callable(model_copy):
+        try:
+            return model_copy(update={"visibility": AMP_THREAD_VISIBILITY})
+        except Exception:
+            return options
+    try:
+        options.visibility = AMP_THREAD_VISIBILITY
+    except Exception:
+        return options
+    return options
 
 
 def format_driver_error(exc: BaseException) -> str:

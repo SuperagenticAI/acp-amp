@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.10"
 
 [[package]]
@@ -22,7 +22,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "agent-client-protocol", specifier = ">=0.7.1" },
+    { name = "agent-client-protocol", specifier = ">=0.7.1,<2" },
     { name = "amp-sdk", specifier = ">=0.0.2" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.5" },
     { name = "mkdocs-material", marker = "extra == 'docs'", specifier = ">=9.5" },
@@ -32,27 +32,28 @@ provides-extras = ["test", "docs"]
 
 [[package]]
 name = "agent-client-protocol"
-version = "0.7.1"
+version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
+    { name = "pydantic-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/db/7c/12da39be4f73026fd9b02144df5f64d803488cf1439aa221b0edb7c305e3/agent_client_protocol-0.7.1.tar.gz", hash = "sha256:8d7031209e14c3f2f987e3b95e7d9c3286158e7b2af1bf43d6aae5b8a429249f", size = 66226, upload-time = "2025-12-28T13:58:57.012Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/14/e2/085f4857cb864c3a423d76e205f75e1da1643862fd452e5cec47c3078d79/agent_client_protocol-1.0.0.tar.gz", hash = "sha256:24914d9996aaeeb08931191382d0ca1028b83743e2797cc05ded39b3bb754425", size = 187237, upload-time = "2026-11-09T00:34:01.706Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/03/48/48d2fb454f911147432cd779f548e188274e1700f1cbe0a258e78158331a/agent_client_protocol-0.7.1-py3-none-any.whl", hash = "sha256:4ffe999488f2b23db26f09becdfaa2aaae6529f0847a52bca61bc2c628001c0f", size = 53771, upload-time = "2025-12-28T13:58:55.967Z" },
+    { url = "https://files.pythonhosted.org/packages/30/a1/7e29d00f01fede44ffdc84099552720727f8bfda942fea79a4f7d5ef1294/agent_client_protocol-1.0.0-py3-none-any.whl", hash = "sha256:179c14266997841438ee15245a2668d31b2c695c13bff87d01c36e016185ddd0", size = 128090, upload-time = "2026-11-09T00:34:00.324Z" },
 ]
 
 [[package]]
 name = "amp-sdk"
-version = "0.1.2"
+version = "0.1.20261112185601"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/4d/5caef0b2b0760b2bac7bdfe8e273f94adb12d7f56909f272b3dd68f0fb8f/amp_sdk-0.1.2.tar.gz", hash = "sha256:6c22501b9ae25e326bd70a77eb1c9572225570544c4bb522962fe71e985cf827", size = 23906, upload-time = "2026-01-19T16:20:07.975Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/25/5d/6ce550a7b5a93642460c326439f7fbf2749112f2f0469b2bcedc91bf2376/amp_sdk-0.1.20261112185601.tar.gz", hash = "sha256:cfa970ff0a09365422ef1fa20eca0f7856a390de90f22847114ddba698022ce0", size = 33762, upload-time = "2026-11-12T18:56:46.372Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c0/ba/9965d7729be9506f2ded87432b92c59eb782d04f236d04252c879cc07562/amp_sdk-0.1.2-py3-none-any.whl", hash = "sha256:a6f9cca5f503ca283542a55d760819cb7fa7be540df2b9e77a12687319b5623c", size = 19320, upload-time = "2026-01-19T16:20:07.032Z" },
+    { url = "https://files.pythonhosted.org/packages/65/90/56598740c016440cc6d41744b431d05bb6565b739b01f1283529d2015eea/amp_sdk-0.1.20261112185601-py3-none-any.whl", hash = "sha256:2b648839e74a913d5615a0d1510e38538bc67d8faffb26683ea91a9a69f596dc", size = 28042, upload-time = "2026-11-12T18:56:45.072Z" },
 ]
 
 [[package]]
